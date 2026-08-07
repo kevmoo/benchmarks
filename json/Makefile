@@ -55,6 +55,7 @@ executables := \
 	target/json_nlohmann_json_cpp_clang \
 	target/json_hs \
 	json-java/target/application \
+	target/json_dart \
 	target/json_v_gcc \
 	target/json_v_clang \
 	target/json_vala_gcc \
@@ -77,6 +78,7 @@ all_runners := $(patsubst %,run[%], $(artifacts)) \
 	run[test_yajl.rb] \
 	run[test.pl] \
 	run[test-xs.pl] \
+	run[test.dart] \
 	run[test.js] \
 	run[pypy][test.py] \
 	run[test.py] \
@@ -302,6 +304,9 @@ target/json_vala_clang: test.vala | target
 json-fsharp/target/Release/net10.0/json-fsharp: json-fsharp/json-fsharp.fsproj json-fsharp/Program.fs
 	$(DOTNET_BUILD)
 
+target/json_dart: test.dart | target
+	dart compile exe $< -o $@
+
 target/json_zig: test.zig | $(zig_fmt)
 	$(ZIG_BUILD)
 
@@ -368,6 +373,9 @@ run[test-xs.pl]:: run[%]: % | file-slurper cpanel-json-xs
 
 run[json-scala/target/application.jar]:: run[%]: %
 	$(SCALA_RUN)
+
+run[test.dart]:: run[%]: %
+	$(XTIME) dart run $^
 
 run[test.js]:: run[%]: %
 	$(NODE_RUN)
