@@ -29,6 +29,8 @@ jobs:
           cd json
           ruby generate_json.rb
           TERM=xterm make run[target/json_dart]
+          cd ../matmul
+          TERM=xterm make run[target/matmul_dart] MSIZE=100
 
   docker-test:
     name: Full Multi-Language Docker Build & Validation

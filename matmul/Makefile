@@ -36,6 +36,7 @@ executables := \
 	target/Release/net10.0/matmul \
 	target/matmul_cpp_gcc \
 	target/matmul_cpp_clang \
+	target/matmul_dart \
 	target/matmul_zig
 
 artifacts := $(executables) \
@@ -167,6 +168,9 @@ target/matmul_cpp_gcc: matmul.cpp | $(eigen) libnotify
 
 target/matmul_cpp_clang: matmul.cpp | $(eigen) libnotify
 	$(CLANG_CPP_BUILD) -I$(eigen) -fopenmp
+
+target/matmul_dart: matmul.dart | target
+	dart compile exe $< -o $@
 
 target/matmul_zig: matmul.zig | $(zig_fmt)
 	$(ZIG_BUILD)

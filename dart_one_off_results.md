@@ -41,3 +41,14 @@ Metrics recorded via socket timing and `/proc/<pid>/statm` memory sampling by `x
 3. **Untyped Dynamic AST Cost (Rust `serde_json::Value` at `1.076 s`)**:
    * Even Rust drops from 0.16s to 1.07s when building generic heap `Map` objects.
    * Demonstrates that dynamic object creation is the primary performance ceiling in Dart `dart:convert`.
+
+---
+
+## Matmul ($1500 \times 1500$ Matrix Multiplication) Results
+
+| Rank | Implementation | Compiler / Flags | Time (s) | Peak RSS (MB) | Slowdown vs 1st |
+| :---: | :--- | :--- | :---: | :---: | :---: |
+| 🥇 1 | **C (`gcc`)** | `gcc -O3 -march=native` | **3.162 s** | 70.0 MB | **1.0x** (Baseline) |
+| 🥈 2 | **Dart AOT (`3.14 dev`)** | `dart compile exe` (`Float64List`) | **4.411 s** | 80.0 MB | **1.39x** |
+
+**Takeaway**: Dart AOT's typed scalar SIMD optimizations on `Float64List` achieve performance within **1.39x of native `gcc -O3`** on raw Float64 matrix multiplication!
