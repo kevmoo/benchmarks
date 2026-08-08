@@ -297,6 +297,13 @@ RUN curl -L https://github.com/c3lang/c3c/releases/download/v$C3/c3-linux.tar.gz
     | tar -xz
 ENV PATH="/root/bin/c3/:${PATH}"
 
+# https://dart.dev/get-dart/archive
+ARG DART=3.12.0
+RUN curl -L https://storage.googleapis.com/dart-archive/channels/stable/release/$DART/sdk/dartsdk-linux-x64-release.zip -o dartsdk.zip \
+    && unzip -q dartsdk.zip \
+    && rm dartsdk.zip
+ENV PATH="/root/bin/dart-sdk/bin:${PATH}"
+
 # https://github.com/vlang/vsl and dependencies
 RUN v install vsl
 

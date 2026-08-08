@@ -1,0 +1,24 @@
+name: Docker & Dart Benchmark CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  docker-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build -t kostya-benchmarks docker/
+
+      - name: Verify Language Versions
+        run: docker run --rm kostya-benchmarks versions
+
+      - name: Run Dart JSON Benchmarks in Container
+        run: |
+          docker run --rm -v "$PWD:/src" -w /src/json kostya-benchmarks make run[target/json_dart] run[test.dart]
