@@ -29,4 +29,4 @@ jobs:
 
       - name: Run Dart JSON Benchmarks in Container
         run: |
-          docker run --rm -v "$PWD:/src" -w /src/json kostya-benchmarks make run[target/json_dart] run[test.dart]
+          docker run --rm --entrypoint /bin/bash -v "$PWD:/src" -w /src/json kostya-benchmarks -c "TERM=xterm make run[target/json_dart] run[test.dart]"
