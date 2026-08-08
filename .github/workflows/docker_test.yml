@@ -7,7 +7,31 @@ on:
     branches: ["**"]
 
 jobs:
+  fast-dart-test:
+    name: Fast Dart Benchmark Verification (~30s)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: '3.12.0'
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - name: Run Dart Benchmarks Directly
+        run: |
+          cd json
+          ruby generate_json.rb
+          TERM=xterm make run[target/json_dart] run[test.dart]
+
   docker-test:
+    name: Full Multi-Language Docker Build & Validation
     runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space on Runner
@@ -21,12 +45,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build Docker Image
-        run: docker build -t kostya-benchmarks docker/
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image with Layer Cache
+        uses: docker/build-push-action@v6
+        with:
+          context: docker
+          load: true
+          tags: kostya-benchmarks:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Verify Language Versions
-        run: docker run --rm kostya-benchmarks versions
+        run: docker run --rm kostya-benchmarks:latest versions
 
       - name: Run Dart JSON Benchmarks in Container
         run: |
-          docker run --rm --entrypoint /bin/bash -v "$PWD:/src" -w /src/json kostya-benchmarks -c "TERM=xterm make run[target/json_dart] run[test.dart]"
+          docker run --rm --entrypoint /bin/bash -v "$PWD:/src" -w /src/json kostya-benchmarks:latest -c "TERM=xterm make run[target/json_dart] run[test.dart]"
