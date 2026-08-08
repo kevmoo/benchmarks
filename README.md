@@ -212,6 +212,7 @@ Testing base64 encoding/decoding of the large blob into the newly allocated buff
 |                    Racket |  3.886<sub>±0.007</sub> |   95.64<sub>±00.10</sub> + 21.81<sub>±00.19</sub> | 156.59<sub>±01.21</sub> |
 |                     D/gdc |  3.976<sub>±0.003</sub> |     7.00<sub>±00.06</sub> + 3.62<sub>±00.00</sub> | 166.06<sub>±02.47</sub> |
 |                Ruby/jruby |  4.129<sub>±0.009</sub> |  240.66<sub>±00.49</sub> + 78.50<sub>±00.12</sub> | 184.97<sub>±01.57</sub> |
+|                      Dart |  8.321<sub>±0.010</sub> |    15.12<sub>±00.06</sub> + 0.00<sub>±00.00</sub> | 390.10<sub>±02.00</sub> |
 |          Ruby/truffleruby |  8.789<sub>±0.034</sub> | 196.12<sub>±01.06</sub> + 544.31<sub>±06.06</sub> | 422.24<sub>±01.81</sub> |
 | Perl (MIME::Base64::Perl) | 10.391<sub>±0.080</sub> |    16.25<sub>±00.12</sub> + 0.19<sub>±00.01</sub> | 462.87<sub>±10.60</sub> |
 
@@ -300,6 +301,7 @@ have some inaccuracies in number parsing:
 |                    C++/g++ (json-c) |  1.187<sub>±0.004</sub> |  113.35<sub>±00.00</sub> + 1215.88<sub>±00.00</sub> |  49.45<sub>±00.40</sub> |
 |                            Go/gccgo |  1.256<sub>±0.003</sub> |     139.25<sub>±00.12</sub> + 0.00<sub>±00.00</sub> |  51.58<sub>±00.27</sub> |
 |                  C++/g++ (Nlohmann) |  1.266<sub>±0.003</sub> |   113.33<sub>±00.00</sub> + 447.88<sub>±00.00</sub> |  53.77<sub>±00.41</sub> |
+|                                Dart |  1.352<sub>±0.005</sub> |   122.81<sub>±00.06</sub> + 429.00<sub>±00.00</sub> |  55.10<sub>±00.40</sub> |
 |                         Ruby (YAJL) |  1.565<sub>±0.019</sub> |   121.69<sub>±00.06</sub> + 233.88<sub>±00.00</sub> |  68.39<sub>±01.94</sub> |
 |                              D/ldc2 |  1.633<sub>±0.002</sub> |   113.12<sub>±00.06</sub> + 638.62<sub>±00.00</sub> |  70.66<sub>±00.51</sub> |
 |     F#/.NET Core (System.Text.Json) |  1.659<sub>±0.022</sub> |   492.76<sub>±00.07</sub> + 172.65<sub>±00.36</sub> |  72.94<sub>±00.79</sub> |
