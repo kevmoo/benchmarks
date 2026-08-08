@@ -23,6 +23,7 @@ executables := \
 	target/base64_vala_clang \
 	target/Release/net10.0/base64 \
 	base64.fsharp/target/Release/net10.0/base64 \
+	target/base64_dart \
 	target/base64_zig
 
 artifacts := $(executables) \
@@ -130,6 +131,9 @@ target/base64_vala_gcc: test.vala | target
 
 target/base64_vala_clang: test.vala | target
 	$(VALAC_CLANG_BUILD)
+
+target/base64_dart: test.dart | target
+	dart compile exe $< -o $@
 
 target/base64_zig: test.zig | $(zig_fmt)
 	$(ZIG_BUILD)

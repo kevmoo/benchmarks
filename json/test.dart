@@ -48,13 +48,7 @@ void main(List<String> args) async {
 
   final text = File('/tmp/1.json').readAsStringSync();
 
-  final isJit =
-      Platform.executable.endsWith('/dart') ||
-      Platform.executable == 'dart' ||
-      Platform.executable.endsWith('dart.exe');
-  final name = isJit ? 'Dart JIT' : 'Dart';
-
-  await notify('$name\t${pid}');
+  await notify('Dart\t${pid}');
   final results = calc(text);
   await notify('stop');
 

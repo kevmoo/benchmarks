@@ -28,7 +28,7 @@ jobs:
         run: |
           cd json
           ruby generate_json.rb
-          TERM=xterm make run[target/json_dart] run[test.dart]
+          TERM=xterm make run[target/json_dart]
 
   docker-test:
     name: Full Multi-Language Docker Build & Validation
@@ -62,4 +62,4 @@ jobs:
 
       - name: Run Dart JSON Benchmarks in Container
         run: |
-          docker run --rm --entrypoint /bin/bash -v "$PWD:/src" -w /src/json kostya-benchmarks:latest -c "TERM=xterm make run[target/json_dart] run[test.dart]"
+          docker run --rm --entrypoint /bin/bash -v "$PWD:/src" -w /src/json kostya-benchmarks:latest -c "TERM=xterm make run[target/json_dart]"

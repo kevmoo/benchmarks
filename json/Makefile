@@ -78,7 +78,6 @@ all_runners := $(patsubst %,run[%], $(artifacts)) \
 	run[test_yajl.rb] \
 	run[test.pl] \
 	run[test-xs.pl] \
-	run[test.dart] \
 	run[test.js] \
 	run[pypy][test.py] \
 	run[test.py] \
@@ -373,9 +372,6 @@ run[test-xs.pl]:: run[%]: % | file-slurper cpanel-json-xs
 
 run[json-scala/target/application.jar]:: run[%]: %
 	$(SCALA_RUN)
-
-run[test.dart]:: run[%]: %
-	$(XTIME) dart run $^
 
 run[test.js]:: run[%]: %
 	$(NODE_RUN)
