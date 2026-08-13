@@ -57,22 +57,23 @@ For complete transparency and reproducibility, all benchmarks were executed on t
    * **2.5x faster** than Dart AOT.
    * Node delegates `JSON.parse` directly to V8's native C++ scanner.
 3. **Untyped AST Cost (Rust `serde_json::Value` at `1.076 s`)**:
-   * When Rust builds generic heap `Map` objects, execution drops from 0.16s to 1.07s.
-   * Confirms dynamic heap object allocation is the primary bottleneck in Dart `dart:convert`.
+   * When Rust builds generic heap `Map` objects, execution drops from 0.16s to 1.07s (a 6.4x slowdown).
+   * This highlights the substantial cost of building dynamic heap maps. In Dart, while dynamic `Map` allocations and GC are major factors in its 1.35s runtime, VM profiling is required to isolate the relative contributions of float parsing (1.57M doubles), string decoding, and user-space dynamic map lookups (`coord['x'] as num`).
 
 ---
 
 ## 🔤 2. Base64 Benchmark (Encode & Decode)
 
 ### Workload Definition
-* **Operation**: **Combined Base64 String Encoding & Decoding**.
-* **Payload**: **128 KB string** repeated across **8,192 iterations** (~1.0 GB throughput volume).
+* **Operation**: **Combined Base64 String Encoding & Decoding** (from the upstream `kostya/benchmarks` suite).
+* **Payload**: **128 KB string** repeated across **8,192 iterations** (~1.07 GB combined throughput volume).
+* **Note**: Measures standalone base64 throughput (allocating String and byte buffers on each iteration); included here as a reference from the upstream macro suite run.
 
 ### Base64 Results
 
-| Implementation | Runtime / Flags | Time (s) | Peak RSS (MB) |
-| :--- | :--- | :---: | :---: |
-| **Dart AOT (`3.14 dev`)** | `dart compile exe` (`base64.encode` / `base64.decode`) | **8.321 s** | **15.1 MB** |
+| Implementation | Runtime / Flags | Time (s) | Throughput (MB/s) | Peak RSS (MB) |
+| :--- | :--- | :---: | :---: | :---: |
+| **Dart AOT (`3.14 dev`)** | `dart compile exe` (`base64.encode` / `base64.decode`) | **8.321 s** | **128.8 MB/s** | **15.1 MB** |
 
 ---
 
