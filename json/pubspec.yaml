@@ -1,0 +1,8 @@
+name: kostya_json_bench
+publish_to: none
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  codable:
+    path: /usr/local/google/home/kevmoo/github/kevmoo/_codable.dart-sdk-integration/pkgs/codable
