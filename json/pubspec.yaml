@@ -5,4 +5,4 @@ environment:
 
 dependencies:
   codable:
-    path: /usr/local/google/home/kevmoo/github/kevmoo/_codable.dart-sdk-integration/pkgs/codable
+    path: /usr/local/google/home/kevmoo/github/kevmoo/codable.dart/pkgs/codable
