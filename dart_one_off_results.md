@@ -42,12 +42,14 @@ For complete transparency and reproducibility, all benchmarks were executed on t
 | 5 | **C++ (`simdjson` DOM)** | C++ SIMD Full Tree Builder | **0.219 s** | **502 MB/s** | 290.8 MB | **2.1x** |
 | 6 | **C++ (`RapidJSON`)** | C++ Standard DOM Parser | **0.251 s** | **438 MB/s** | 242.6 MB | **2.5x** |
 | 7 | **Node.js (24.19 V8 C++)** | V8 C++ Engine `JSON.parse` | **0.533 s** | **206 MB/s** | 446.0 MB | **5.2x** |
-| 8 | **Go (`jsoniter`)** | Go Code-Gen Streaming Reader | **0.721 s** | **152 MB/s** | 116.9 MB | **7.1x** |
-| 9 | **Rust (`serde_json::Value` Untyped)** | Rust Dynamic AST Heap Map | **1.076 s** | **102 MB/s** | 951.0 MB | **10.5x** |
-| 10 | **CPython (3.12)** | C-extension `json.loads` | **1.275 s** | **86 MB/s** | 448.9 MB | **12.5x** |
-| 11 | **Go (`encoding/json`)** | Standard Go Reflection Unmarshaler | **1.351 s** | **81 MB/s** | 116.6 MB | **13.2x** |
-| 12 | **Dart AOT (`3.14 dev`)** | `dart:convert` AOT (`jsonDecode`) | **1.352 s** | **81 MB/s** | 551.4 MB | **13.3x** |
-| 13 | **Ruby (3.2 / YJIT)** | C-extension `JSON.parse` | **1.980 s** | **55 MB/s** | 343.0 MB | **19.4x** |
+| 8 | **Dart Codable (Streaming Scalar)** | `codable` AST Stream | **0.560 s** | **196 MB/s** | 119.0 MB | **5.5x** |
+| 9 | **Dart Codable (Hydrated)** | `codable` Typed Zero-Allocation Struct | **0.581 s** | **189 MB/s** | 175.0 MB | **5.7x** |
+| 10 | **Go (`jsoniter`)** | Go Code-Gen Streaming Reader | **0.721 s** | **152 MB/s** | 116.9 MB | **7.1x** |
+| 11 | **Rust (`serde_json::Value` Untyped)** | Rust Dynamic AST Heap Map | **1.076 s** | **102 MB/s** | 951.0 MB | **10.5x** |
+| 12 | **CPython (3.12)** | C-extension `json.loads` | **1.275 s** | **86 MB/s** | 448.9 MB | **12.5x** |
+| 13 | **Go (`encoding/json`)** | Standard Go Reflection Unmarshaler | **1.351 s** | **81 MB/s** | 116.6 MB | **13.2x** |
+| 14 | **Dart AOT (`3.14 dev`)** | `dart:convert` AOT (`jsonDecode`) | **1.352 s** | **81 MB/s** | 551.4 MB | **13.3x** |
+| 15 | **Ruby (3.2 / YJIT)** | C-extension `JSON.parse` | **1.980 s** | **55 MB/s** | 343.0 MB | **19.4x** |
 
 ### Key Technical Insights
 1. **Rust Typed Struct Deserialization (`0.169 s` / `650 MB/s`)**:

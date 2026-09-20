@@ -1,3 +1,6 @@
+// Explicitly labeled zero-allocation scalar streaming cursor benchmark.
+// Does NOT hydrate a 524,288-element List<Coordinate> in heap; streams
+// x, y, z directly into stack registers to measure raw JsonTokenReader cursor speed.
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -40,16 +43,14 @@ extension type const _$RootSchema(int _value) {
   ]);
 }
 
-class Coordinate {
-  final double x, y, z;
-  Coordinate(this.x, this.y, this.z);
-}
-
 Map<String, double> calc(Uint8List bytes) {
   final reader = JsonTokenReader.fromBytes(bytes);
   reader.beginObject();
 
-  final List<Coordinate> coordinates = [];
+  double x = 0;
+  double y = 0;
+  double z = 0;
+  int count = 0;
 
   while (reader.hasNext()) {
     switch (reader.selectName(_$RootSchema.options)) {
@@ -77,7 +78,10 @@ Map<String, double> calc(Uint8List bytes) {
             }
           }
           reader.endObject();
-          coordinates.add(Coordinate(cx, cy, cz));
+          x += cx;
+          y += cy;
+          z += cz;
+          count++;
         }
         reader.endArray();
         break;
@@ -88,20 +92,7 @@ Map<String, double> calc(Uint8List bytes) {
   }
   reader.endObject();
 
-  double x = 0;
-  double y = 0;
-  double z = 0;
-  for (final c in coordinates) {
-    x += c.x;
-    y += c.y;
-    z += c.z;
-  }
-
-  return {
-    'x': x / coordinates.length,
-    'y': y / coordinates.length,
-    'z': z / coordinates.length,
-  };
+  return {'x': x / count, 'y': y / count, 'z': z / count};
 }
 
 void main(List<String> args) async {
@@ -121,7 +112,7 @@ void main(List<String> args) async {
 
   final bytes = File('/tmp/1.json').readAsBytesSync();
 
-  await notify('Dart Codable (Hydrated)\t${pid}');
+  await notify('Dart Codable (Streaming Scalar)\t$pid');
   final results = calc(bytes);
   await notify('stop');
 

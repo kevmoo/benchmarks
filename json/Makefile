@@ -56,6 +56,8 @@ executables := \
 	target/json_hs \
 	json-java/target/application \
 	target/json_dart \
+	target/json_dart_codable \
+	target/json_dart_codable_streaming_scalar \
 	target/json_v_gcc \
 	target/json_v_clang \
 	target/json_vala_gcc \
@@ -426,3 +428,9 @@ clean: clean-go
 
 $(json_file):
 	ruby generate_json.rb
+
+target/json_dart_codable: test_codable.dart | target
+	dart compile exe $< -o $@
+
+target/json_dart_codable_streaming_scalar: test_codable_streaming_scalar.dart | target
+	dart compile exe $< -o $@
